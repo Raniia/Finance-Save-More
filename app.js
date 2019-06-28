@@ -7,7 +7,7 @@ mongoose.connect(db,{useNewUrlParser:true}).
 then(()=>console.log('wow')).catch(err => {console.log(err)})
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-
+app.use(express.urlencoded({extended:false}));
 //routes
 app.use('/',require('./routes/index'));
 app.use('/users',require('./routes/users'));
