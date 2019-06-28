@@ -14,13 +14,13 @@ router.post('/register',(req,res)=>{
     const {name,email,password,password2 }=req.body;
     let errors =[];
     if(!name || !email || !password || !password2 ){
-        errors.push({msg:'please fill in all fields'})
+        errors.push({msg:'Please fill in all the fields'})
     }
     if(password !== password2){
-        errors.push({msg:'password do not match'})
+        errors.push({msg:'Passwords do not match'})
     }
     if(password.length < 6){
-        errors.push({msg:'password should be at least 6 characters'})
+        errors.push({msg:'Password should be at least 6 characters'})
     }
     if(errors.length>0){
         res.render('register',{errors,name,email,password,password2});
@@ -28,7 +28,7 @@ router.post('/register',(req,res)=>{
     else {
         User.findOne({email:email}).then((user)=>{
             if(user){
-                errors.push({msg:'user already exists'})
+                errors.push({msg:'This email is already in use,'})
                 res.render('register',{errors,name,email,password,password2});
             }else{
                 const newUser = new User({name,email,password});
@@ -37,7 +37,7 @@ router.post('/register',(req,res)=>{
                         if(err) throw err;
                         newUser.password=hash;
                         newUser.save().then(user=>{
-                            req.flash("success_msg",'you are now registerd and can log in');
+                            req.flash("success_msg",'Registered successfully. Login now.');
                             res.redirect('/users/login')
                         }).catch(err => console.log(err));
                     })
