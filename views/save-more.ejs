@@ -1,0 +1,159 @@
+<script>
+    var stepper1;
+    var saveMoreModel = {};
+    $(document).ready(function () {
+        var stepperEl = document.getElementById('stepper1')
+        stepper1 = new Stepper(stepperEl)
+
+    });
+    function submitStep(formId, arrayOfItems, skipValidation, lastStep) {
+        var $myForm = $(formId);
+        if (!skipValidation) {        
+        for (var i = 0; i < arrayOfItems.length; i++) {
+            saveMoreModel[arrayOfItems[i]] = $('#' + arrayOfItems[i]).val();
+        }
+    }
+        else {
+            for (var i = 0; i < arrayOfItems.length; i++) {
+            saveMoreModel[arrayOfItems[i]] = '';
+        }
+        }
+        console.log(saveMoreModel);
+        if (!$myForm[0].checkValidity() && !skipValidation) {
+        }
+        else {
+            stepper1.next();
+        }
+
+        if (lastStep) {
+            submitLastStep();
+        }
+    };
+    function submitLastStep() {
+        $.post('/save-more',   // url
+       saveMoreModel,
+       function(data, status, jqXHR) {// success callback
+window.location.href = '/save-more';
+    })
+    }
+</script>
+<% include ./partials/navigation-bar %>
+<div id="stepper1" class="bs-stepper linear">
+    <div class="bs-stepper-header" role="tablist">
+        <div class="step active" data-target="#test-l-1">
+            <button type="button" class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1"
+                aria-selected="true">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Monthly Income</span>
+            </button>
+        </div>
+        <div class="bs-stepper-line"></div>
+        <div class="step" data-target="#test-l-2">
+            <button type="button" class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2"
+                aria-selected="false" disabled="disabled">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Monthly Bills</span>
+            </button>
+        </div>
+        <div class="bs-stepper-line"></div>
+        <div class="step" data-target="#test-l-3">
+            <button type="button" class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3"
+                aria-selected="false" disabled="disabled">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Living Expenses</span>
+            </button>
+        </div>
+        <div class="bs-stepper-line"></div>
+        <div class="step" data-target="#test-l-4">
+            <button type="button" class="step-trigger" role="tab" id="stepper1trigger4" aria-controls="test-l-4"
+                aria-selected="false" disabled="disabled">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Bank Account</span>
+            </button>
+        </div>
+    </div>
+    <div class="bs-stepper-content">
+        <form id="myform" onsubmit="return false">
+            <div id="test-l-1" role="tabpanel" class="bs-stepper-pane active" aria-labelledby="stepper1trigger1">
+                <div class="form-group">
+                    <label for="monthlyIncome">Please enter your average income per month.</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="number" required class="form-control" step="0.01" id="monthlyIncome">
+                        </div>
+                        <div class="col-md-2">
+
+
+
+                            <select class="form-control" name="currency" id="currencies">
+                                <% currencies.forEach(function(currency) { %>
+                                <option value=<%= currency.name %>><%= currency.code %> (<%= currency.symbol_native %>)
+                                </option>
+                                <% }) %>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary"
+                    onclick="submitStep('#myform', ['monthlyIncome', 'currencies'])">Next</button>
+            </div>
+        </form>
+        <form id="myform2" onsubmit="return false" novalidate>
+
+            <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
+                <div class="form-group">
+                    <label for="livingExpenses">Any bills or money you need to pay each month? *If not, please
+                        skip*.</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="number" step="0.01" required class="form-control" id="livingExpenses">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform2', ['livingExpenses'])">Next</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform2', ['livingExpenses'], true)">Skip</button>
+
+            </div>
+        </form>
+        <form id="myform3" onsubmit="return false">
+
+            <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger3">
+
+                <div class="form-group">
+                    <label for="monthlyBills">Enter your average amount of money you spend on your basic needs (living
+                        expenses only: food, drinks, transportation).</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="number" step="0.01" class="form-control" id="monthlyBills">
+                        </div>
+                    </div>
+                </div>
+
+
+                <button class="btn btn-primary mt-5" onclick="stepper1.previous()">Previous</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform3', ['monthlyBills'])">Next</button>
+            </div>
+        </form>
+
+        <form id="myform4" onsubmit="return false">
+
+            <div id="test-l-4" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger4">
+
+                <div class="form-group">
+                    <label for="bankAccount">Enter the amount of money present in your account currently.</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="number" step="0.01" required class="form-control" id="bankAccount">
+                        </div>
+                    </div>
+                </div>
+
+
+                <button class="btn btn-primary mt-5" onclick="stepper1.previous()">Previous</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform4', ['bankAccount'], false, true)">Finish</button>
+            </div>
+        </form>
+    </div>
+</div>

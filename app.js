@@ -38,6 +38,7 @@ app.use(passport.session());
 //routes
 app.use('/',require('./routes/index'));
 app.use('/users',require('./routes/users'));
+app.use(require('./routes/save-more'))
 
 // app.use(express.static('views/css'))
 
