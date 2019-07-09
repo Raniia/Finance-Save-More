@@ -5,10 +5,14 @@ const User = require('../models/User');
 const passport = require('passport');
 
 router.get('/login',(req,res)=>{
-res.render('login');
+res.render('login', {
+    user: req.user
+  });
 });
 router.get('/register',(req,res)=>{
-res.render('register');
+res.render('register', {
+    user: req.user
+  });
 });
 router.post('/register',(req,res)=>{
     const {name,email,password,password2 }=req.body;
@@ -23,13 +27,13 @@ router.post('/register',(req,res)=>{
         errors.push({msg:'Password should be at least 6 characters'})
     }
     if(errors.length>0){
-        res.render('register',{errors,name,email,password,password2});
+        res.render('register',{errors,name,email,password,password2, user: req.user});
     }
     else {
         User.findOne({email:email}).then((user)=>{
             if(user){
                 errors.push({msg:'This email is already in use,'})
-                res.render('register',{errors,name,email,password,password2});
+                res.render('register',{errors,name,email,password,password2, user: req.user});
             }else{
                 const newUser = new User({name,email,password});
                 bcrypt.genSalt(10,(err,salt)=>{

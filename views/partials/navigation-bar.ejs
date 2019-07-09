@@ -18,7 +18,11 @@
                             </ul>
                         </li>
                         <li><a href="#">Contact us</a></li>
-                        <li class="btn-cta"><a href="/users/login"><span>Login</span></a></li>
+                        <%if (user) { %>
+                            <li class="btn-cta"><a href="/users/logout"><span>Logout</span></a></li>
+                            <% } else{ %> 
+                                <li class="btn-cta"><a href="/users/login"><span>Login</span></a></li>
+                            <% } %>
                     </ul>
                 </div>
             </div>

@@ -9,12 +9,14 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 router.get('/save-more', ensureAuthenticated, (req, res) => {
     SavingDetails.find({ user: req.user }).then((response) => {
         if (response.length) {
-            res.render('items');
+            res.render('items', {
+                user: req.user
+              });
 
         }
         else {
             Currency.find({}).then((currencies) => {
-                res.render('save-more', { currencies });
+                res.render('save-more', { currencies , user: req.user});
             });
         }
     });
