@@ -3,7 +3,7 @@ const itemSchema = new mongoose.Schema({
     name:{type:String,required:true},
     price:{type:String,required:true},
     savedSoFar:{type:String,required:false},
-    dueDate:{type:Date, required:true},
+    date:{type:Date, required:true},
     user: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }

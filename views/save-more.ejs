@@ -87,7 +87,7 @@ window.location.href = '/save-more';
 
                             <select class="form-control" name="currency" id="currencies">
                                 <% currencies.forEach(function(currency) { %>
-                                <option value=<%= currency.name %>><%= currency.code %> (<%= currency.symbol_native %>)
+                                <option value=<%= currency.code %>><%= currency.code %> (<%= currency.symbol_native %>)
                                 </option>
                                 <% }) %>
                             </select>

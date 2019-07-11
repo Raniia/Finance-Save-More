@@ -1488,4 +1488,56 @@ input[type="text"] {
   opacity: 0;
 }
 
+.modal-dialog.cascading-modal.modal-avatar .modal-header {
+  box-shadow: none;
+  margin: -6rem 0 -1rem;
+}
+.img-fluid, .modal-dialog.cascading-modal.modal-avatar .modal-header, .video-fluid {
+  max-width: 100%;
+  height: auto;
+  
+}
+.modal-dialog.cascading-modal.modal-avatar .modal-header img {
+  width: 130px;
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+  margin-left: auto;
+  margin-right: auto;
+}
+.rounded-circle {
+  border-radius: 50%!important;
+}
+.modal-dialog.cascading-modal .modal-body, .modal-dialog.cascading-modal .modal-footer {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  color: #616161;
+}
+.modal-body {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem;
+  
+}
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal-sm {
+  width: 500px;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
 /*# sourceMappingURL=style.css.map */
