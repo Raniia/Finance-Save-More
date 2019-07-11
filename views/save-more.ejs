@@ -8,15 +8,15 @@
     });
     function submitStep(formId, arrayOfItems, skipValidation, lastStep) {
         var $myForm = $(formId);
-        if (!skipValidation) {        
-        for (var i = 0; i < arrayOfItems.length; i++) {
-            saveMoreModel[arrayOfItems[i]] = $('#' + arrayOfItems[i]).val();
+        if (!skipValidation) {
+            for (var i = 0; i < arrayOfItems.length; i++) {
+                saveMoreModel[arrayOfItems[i]] = $('#' + arrayOfItems[i]).val();
+            }
         }
-    }
         else {
             for (var i = 0; i < arrayOfItems.length; i++) {
-            saveMoreModel[arrayOfItems[i]] = '';
-        }
+                saveMoreModel[arrayOfItems[i]] = '';
+            }
         }
         console.log(saveMoreModel);
         if (!$myForm[0].checkValidity() && !skipValidation) {
@@ -31,10 +31,10 @@
     };
     function submitLastStep() {
         $.post('/save-more',   // url
-       saveMoreModel,
-       function(data, status, jqXHR) {// success callback
-window.location.href = '/save-more';
-    })
+            saveMoreModel,
+            function (data, status, jqXHR) {// success callback
+                window.location.href = '/save-more';
+            })
     }
 </script>
 <% include ./partials/navigation-bar %>
@@ -152,7 +152,8 @@ window.location.href = '/save-more';
 
 
                 <button class="btn btn-primary mt-5" onclick="stepper1.previous()">Previous</button>
-                <button class="btn btn-primary" onclick="submitStep('#myform4', ['bankAccount'], false, true)">Finish</button>
+                <button class="btn btn-primary"
+                    onclick="submitStep('#myform4', ['bankAccount'], false, true)">Finish</button>
             </div>
         </form>
     </div>

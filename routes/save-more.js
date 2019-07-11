@@ -12,12 +12,19 @@ router.get('/save-more', ensureAuthenticated, (req, res) => {
 
         if (response.length) {
             const currencySelected = response[0].currencies;
-            Currency.find({ code: currencySelected }).then((curr) => {
+            Promise.all([Item.find({user: req.user }).then((items)=>{
+                return items;
+            }),Currency.find({ code: currencySelected }).then((curr) => {
+                return curr;
+            })]).then((data)=>{
                 res.render('items', {
                     user: req.user,
-                    currency: curr[0].code + ' (' + curr[0].symbol_native + ')'
+                    currency: data[1][0].code + ' (' + data[1][0].symbol_native + ')',
+                    items:data[0],
+                    savingDetails:response[0]
                 });
-            })
+            });
+
         }
         else {
             Currency.find({}).then((currencies) => {
@@ -38,6 +45,14 @@ router.post('/save-more', ensureAuthenticated, (req, res) => {
         res.json(details);
     }).catch(err => console.log(err));
 });
+router.put('/save-more', ensureAuthenticated, (req, res) => {
+    const { monthlyIncome, livingExpenses, monthlyBills, bankAccount } = req.body;
+    SavingDetails.findOneAndUpdate({user: req.user}, { monthlyIncome, livingExpenses, monthlyBills, bankAccount } , {upsert:true}, function(err, doc){
+        if (err) return res.send(500, { error: err });
+        return res.send("succesfully saved");
+    });
+});
+
 
 router.post('/save-items', ensureAuthenticated, (req, res) => {
     const { name, price, date } = req.body;
@@ -45,7 +60,24 @@ router.post('/save-items', ensureAuthenticated, (req, res) => {
     const user = req.user;
     const item = new Item({ name, price, savedSoFar, date, user });
     item.save().then(details => {
-        res.json(details);
+        Promise.all([
+        Item.find({user: req.user }).then((items)=>{
+            return items;
+        }),
+        SavingDetails.find({ user: req.user }).then((response) => {
+            return response;
+        })
+    ]).then((data)=>{
+        Currency.find({ code: data[1][0].currencies }).then((curr) => {
+            res.render('items', {
+                user: req.user,
+                currency: curr[0].code + ' (' + curr[0].symbol_native + ')',
+                items:data[0],
+                savingDetails:data[1][0]
+            });
+        })
+    })
+
     }).catch(err => console.log(err));
 });
 
