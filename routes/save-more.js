@@ -76,7 +76,7 @@ router.post('/save-items', ensureAuthenticated, (req, res) => {
         Currency.find({ code: data[1][0].currencies }).then((curr) => {
             res.render('items', {
                 user: req.user,
-                currency: curr[0].code + ' (' + curr[0].symbol_native + ')',
+                currency: curr[0],
                 items:Calculateditems,
 
                 savingDetails:data[1][0]
