@@ -17,11 +17,13 @@ router.get('/save-more', ensureAuthenticated, (req, res) => {
             }),Currency.find({ code: currencySelected }).then((curr) => {
                 return curr;
             })]).then((data)=>{
+                var Calculateditems =calculateItemsEndDate( JSON.parse(JSON.stringify(data[0])),JSON.parse(JSON.stringify(response[0])));
+                console.log(Calculateditems);
                 res.render('items', {
                     user: req.user,
                     currency: data[1][0],
-                    items:calculateItemsEndDate(data[0],response[0]),
-                    savingDetails:response[0]
+                    items:Calculateditems,
+                    savingDetails:[0]
                 });
             });
 
@@ -68,11 +70,14 @@ router.post('/save-items', ensureAuthenticated, (req, res) => {
             return response;
         })
     ]).then((data)=>{
+        var Calculateditems =calculateItemsEndDate( JSON.parse(JSON.stringify(data[0])),JSON.parse(JSON.stringify(data[1][0])));
+        console.log(Calculateditems);
         Currency.find({ code: data[1][0].currencies }).then((curr) => {
             res.render('items', {
                 user: req.user,
                 currency: curr[0].code + ' (' + curr[0].symbol_native + ')',
-                items:calculateItemsEndDate(data[0],data[1][0]),
+                items:Calculateditems,
+
                 savingDetails:data[1][0]
             });
         })
@@ -140,6 +145,7 @@ function checkIfThereIsStillItems(items) {
     return remainingItems;
 }
 function calculateItemsEndDate(items, savingDetails) {
+    debugger
     items = calculateItemPriority(items);
     for (var x = 0; x < items.length; x++) {
         items[x] = getItemTime(savingDetails, items[x]);
@@ -159,7 +165,7 @@ function calculateItemsEndDate(items, savingDetails) {
         }
         calculateItemsEndDate(remainingItems, savingDetails);
     }
+
     return items;
-console.log(items);
 }
 module.exports = router;
