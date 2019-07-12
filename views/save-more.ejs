@@ -103,17 +103,17 @@
 
             <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
                 <div class="form-group">
-                    <label for="livingExpenses">Any bills or money you need to pay each month? *If not, please
+                    <label for="monthlyBills">Any bills or money you need to pay each month? *If not, please
                         skip*.</label>
                     <div class="row">
                         <div class="col-md-3">
-                            <input type="number" step="0.01" required class="form-control" id="livingExpenses">
+                            <input type="number" step="0.01" class="form-control" id="monthlyBills">
                         </div>
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
-                <button class="btn btn-primary" onclick="submitStep('#myform2', ['livingExpenses'])">Next</button>
-                <button class="btn btn-primary" onclick="submitStep('#myform2', ['livingExpenses'], true)">Skip</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform2', ['monthlyBills'])">Next</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform2', ['monthlyBills'], true)">Skip</button>
 
             </div>
         </form>
@@ -122,18 +122,18 @@
             <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger3">
 
                 <div class="form-group">
-                    <label for="monthlyBills">Enter your average amount of money you spend on your basic needs (living
+                    <label for="livingExpenses">Enter your average amount of money you spend on your basic needs (living
                         expenses only: food, drinks, transportation).</label>
                     <div class="row">
                         <div class="col-md-3">
-                            <input type="number" step="0.01" class="form-control" id="monthlyBills">
+                            <input type="number" step="0.01" required class="form-control" id="livingExpenses">
                         </div>
                     </div>
                 </div>
 
 
                 <button class="btn btn-primary mt-5" onclick="stepper1.previous()">Previous</button>
-                <button class="btn btn-primary" onclick="submitStep('#myform3', ['monthlyBills'])">Next</button>
+                <button class="btn btn-primary" onclick="submitStep('#myform3', ['livingExpenses'])">Next</button>
             </div>
         </form>
 
