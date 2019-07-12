@@ -145,7 +145,6 @@ function checkIfThereIsStillItems(items) {
     return remainingItems;
 }
 function calculateItemsEndDate(items, savingDetails) {
-    debugger
     items = calculateItemPriority(items);
     for (var x = 0; x < items.length; x++) {
         items[x] = getItemTime(savingDetails, items[x]);
@@ -157,15 +156,14 @@ function calculateItemsEndDate(items, savingDetails) {
             savingDetails.bankAccountAfter=0;
         }
         else {
-            savingDetails.bankAccountAfter = (savingDetails.monthlyIncome - savingDetails.livingExpenses);
-            savingDetails.bankAccount = savingDetails.bankAccountAfter;
+            savingDetails.bankAccount = (savingDetails.monthlyIncome - savingDetails.livingExpenses);
             for (var j = 0; j < items.length; j++) {
                 items[j].remaining = items[j].remaining ?  (items[j].remaining+1) : 1;
             }
         }
         calculateItemsEndDate(remainingItems, savingDetails);
     }
-
     return items;
+
 }
 module.exports = router;
