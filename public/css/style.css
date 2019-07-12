@@ -50,6 +50,33 @@
   text-align: center;
 }
 
+.chip.chip-md {
+  height: 42px;
+  line-height: 42px;
+  border-radius: 21px;
+}
+.chip {
+  display: inline-block;
+  height: 32px;
+  font-weight: 500;
+  color: rgba(0,0,0,.6);
+  line-height: 32px;
+  padding: 0 12px;
+  border-radius: 16px;
+  background-color: #eceff1;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  transition: all .3s linear;
+}
+.waves-effect {
+  position: relative;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* =======================================================
 *

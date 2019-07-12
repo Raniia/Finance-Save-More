@@ -63,13 +63,21 @@
 
 </script>
 
+
+
 <% include ./partials/navigation-bar %>
 <!-- <a href="/save-more?editMode=true" class="btn btn-default">Edit Saving Details</a> -->
 <div style="margin-bottom: 50px"></div>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
+  	<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+          <h2>Start Saving Now.</h2>
+          <h4>Just wish and add, we will help you get it as soon as possible.</h4>
+				</div>
+			</div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 animate-box">
       <div>
         <div class="box-header ui-sortable-handle" style="cursor: move;">
           <i class="ion ion-clipboard"></i>
@@ -110,9 +118,7 @@
 
 
 
-
-
-    <div class="col-md-6">
+    <div class="col-md-6 animate-box">
       <div id="editView">
         <div id="sum_box" class="row mbl text-center">
           <div class="panel income db mbm">
@@ -127,16 +133,19 @@
                   <div class= "middle">
                       <div class= "innie">
 
-                    <div>
-                        Monthly Income : <%= savingDetails.monthlyIncome %>
-                      </div>
-                      <div>
+                        <div class="chip chip-md waves-effect">
+                            Monthly Income : <%= savingDetails.monthlyIncome %>
+                          </div>
+                      
+                      <div class="chip chip-md waves-effect">
                         Living Expenses : <%= savingDetails.livingExpenses %>
                       </div>
-                      <div>
+                      <%if (savingDetails.monthlyBills) { %>
+                        <div class="chip chip-md waves-effect">
                         Monthly Bills : <%= savingDetails.monthlyBills %>
                       </div>
-                      <div>
+                      <% } %> 
+                      <div class="chip chip-md waves-effect">
                         Bank Account : <%= savingDetails.bankAccount %>
                       </div>
                       </div>
