@@ -1,3 +1,5 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css";
+@import "http://fonts.googleapis.com/css?family=Roboto:400,500";
 @font-face {
   font-family: 'icomoon';
   src: url("../fonts/icomoon/icomoon.eot?srf3rx");
@@ -5,6 +7,50 @@
   font-weight: normal;
   font-style: normal;
 }
+
+#sum_box h4 {
+    margin-top: 0px;
+    font-size: 30px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+
+#sum_box .icon {
+    color: #DD356E;
+    font-size: 55px;
+    margin-top: 7px;
+    margin-bottom: 0px;
+    float: right;
+}
+
+.icon{
+  height: 60px;  /*height of icon */
+  width: 60px;  /*width of icon */
+}
+
+.panel.income.db.mbm{
+        background-color:#fff;
+        border: 5px solid #DD356E;
+}
+
+.outer {
+  display: table;
+  height: 100%;
+  width: 100%;
+  background-position: center;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.innie {
+  text-align: center;
+}
+
+
 /* =======================================================
 *
 * 	Template Style 

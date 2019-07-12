@@ -19,7 +19,7 @@ router.get('/save-more', ensureAuthenticated, (req, res) => {
             })]).then((data)=>{
                 res.render('items', {
                     user: req.user,
-                    currency: data[1][0].code + ' (' + data[1][0].symbol_native + ')',
+                    currency: data[1][0],
                     items:data[0],
                     savingDetails:response[0]
                 });
