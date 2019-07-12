@@ -17,4 +17,9 @@ router.get('/why-us', (req, res) => {
     user: req.user
   })
 })
+router.get('/contact-us', (req, res) => {
+  res.render('contact-us', {
+    user: req.user
+  })
+})
 module.exports = router;
