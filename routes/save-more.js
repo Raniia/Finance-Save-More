@@ -23,7 +23,7 @@ router.get('/save-more', ensureAuthenticated, (req, res) => {
                     user: req.user,
                     currency: data[1][0],
                     items:Calculateditems,
-                    savingDetails:[0]
+                    savingDetails:response[0]
                 });
             });
 
@@ -70,6 +70,7 @@ router.post('/save-items', ensureAuthenticated, (req, res) => {
             return response;
         })
     ]).then((data)=>{
+
         var Calculateditems =calculateItemsEndDate( JSON.parse(JSON.stringify(data[0])),JSON.parse(JSON.stringify(data[1][0])));
         console.log(Calculateditems);
         Currency.find({ code: data[1][0].currencies }).then((curr) => {
@@ -112,7 +113,7 @@ function dhm(t) {
 function calculateItemPriority(items) {
     for (var i = 0; i < items.length; i++) {
         var diff = Math.abs(new Date() - new Date(items[i].date));
-        items[i].daysToBuy = Number(dhm(diff).split(':')[0]);
+        items[i].daysToBuy = Number(dhm(diff).split(':')[0]) || 1 ;
     }
     var sumDays = items.reduce((accumulator, currentValue) => accumulator + currentValue.daysToBuy, 0)
     for (var j = 0; j < items.length; j++) {
