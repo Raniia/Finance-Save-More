@@ -49,7 +49,7 @@ router.put('/save-more', ensureAuthenticated, (req, res) => {
     const { monthlyIncome, livingExpenses, monthlyBills, bankAccount } = req.body;
     SavingDetails.findOneAndUpdate({user: req.user}, { monthlyIncome, livingExpenses, monthlyBills, bankAccount } , {upsert:true}, function(err, doc){
         if (err) return res.send(500, { error: err });
-        return res.send("succesfully saved");
+        return res.send("Succesfully saved");
     });
 });
 
@@ -79,6 +79,13 @@ router.post('/save-items', ensureAuthenticated, (req, res) => {
     })
 
     }).catch(err => console.log(err));
+});
+
+router.delete('/save-items', ensureAuthenticated,(req, res) => {
+    Item.findOneAndRemove({ _id: req.body._id }, function(err) {
+        if (err) return res.send(500, { error: err });
+        return res.send("Succesfully deleted");
+    });
 });
 
 module.exports = router;

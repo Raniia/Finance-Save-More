@@ -25,9 +25,7 @@
   })
   var saveMoreModel = {};
   function submitStep(formId, arrayOfItems) {
-    debugger
     var $myForm = $(formId);
-    console.log($myForm[0].checkValidity());
     if (!$myForm[0].checkValidity()) {
     }
     else {
@@ -48,6 +46,20 @@
     }
 
   };
+  function deleteItem(item){
+    item = JSON.parse(item);
+    $.ajax({
+        url: '/save-items',
+        type: 'delete',
+        data: item,
+
+        success: function (result) {
+          // Do something with the result
+          window.location.href = '/save-more';
+        }
+      });
+
+  }
 
 </script>
 
@@ -81,9 +93,10 @@
               <span class="handle ui-sortable-handle">
               </span>
               <span class="text"> <%= item.name %></span>
-              <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-              <i class="fa fa-edit"></i>
-              <i class="fa fa-trash-o"></i>
+              <small class="label label-warning"><i class="fa fa-clock-o"></i> 2 mins</small>
+              <span onclick="deleteItem('<%= JSON.stringify(item) %>')">
+                  <i class="fa fa-trash-o"></i>
+                </span>
             </li>
             <% }); %>
           </ul>
