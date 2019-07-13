@@ -8,6 +8,11 @@
   font-style: normal;
 }
 
+.headlineText {
+  margin-top: 15px;
+  margin-bottom: -85px;
+}
+
 #sum_box h4 {
     margin-top: 0px;
     font-size: 30px;
@@ -1613,4 +1618,5 @@ input[type="text"] {
   text-align: left;
   vertical-align: middle;
 }
+
 /*# sourceMappingURL=style.css.map */

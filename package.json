@@ -21,7 +21,8 @@
     "mongoose": "^5.6.1",
     "node-static": "^0.7.11",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "simpleflowchart.jquery": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

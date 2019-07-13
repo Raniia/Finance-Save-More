@@ -22,4 +22,9 @@ router.get('/contact-us', (req, res) => {
     user: req.user
   })
 })
+router.get('/buy-or-not', ensureAuthenticated, (req, res) => {
+  res.render('buy-or-not', {
+    user: req.user
+  })
+})
 module.exports = router;
