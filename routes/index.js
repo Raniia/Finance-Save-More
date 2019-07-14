@@ -27,4 +27,9 @@ router.get('/buy-or-not', ensureAuthenticated, (req, res) => {
     user: req.user
   })
 })
+router.get('/categories/clothing', ensureAuthenticated, (req, res) => {
+  res.render('categories/clothing', {
+    user: req.user
+  })
+})
 module.exports = router;
