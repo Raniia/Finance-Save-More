@@ -1,89 +1,134 @@
 <% include .././partials/navigation-bar %>
+<script>
+  $(document).ready(function () {
+    $("#searchButton").click(function () {
 
+      $.ajax({
+        url: '/search',
+        type: 'post',
+        data: {key:$("#searchForItem").val()},
+
+        success: function (result) {
+          // Do something with the result
+          $("#result").html(JSON.stringify(result))
+                }
+      });
+    });
+  });
+
+</script>
 
 
 
 <div id="fh5co-wireframe">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<h2>To buy or not to buy?</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5 animate-box">
-					<div class="user-frame">
-                         
-
-                            <span>Clothing Tips and Tricks</span>
-                            <br><br>
-
-
-
-                       
-<div class="accordion" id="accordionExample">
-      
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-Tips and Tricks 1              
-</button>
-            </h5>
-          </div>
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">
-                    It pays to spend more for quality when buying clothes. The better made a garment is, whether it’s jeans, a t-shirt, or a blazer, the longer it will typically last. Higher-quality clothing is also easier to care for than the cheap stuff. If you’ve ever tossed a pair of cheap, viscose shorts or polyester top in the wash and had it come out not looking like itself, you know what I’m talking about.            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-              <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Tips and Tricks 2          
-                </button>
-            </h5>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body">
-                    Quality clothing lasts longer because of better fabric and better construction. If you’re not sure if a piece of clothing is high quality, your eyes and hands can tell you.
-
-                    First, feel the fabric. A rough or scratchy texture is often a sign of a lower-quality fabric, unless it’s meant to be slightly nubby, like a tweed or some types of silk. You don’t want any holes or loose threads in the weave or knit of the fabric either. Next, lift the fabric up to the light. In the case of cotton or wool, you don’t want to be able to see completely through the fabric.
-                    
-                    Try to manipulate the fabric. If you crumple up a corner of a shirt or the hem of a pair of pants or skirt, what happens to the fabric once you let go? Some types of fabric, such as cheap cottons and linens, hold wrinkles like it’s their job. If the fabric wrinkles after a little handling, imagine what it will look like after a long day at work or play.            </div>
-          </div>
-        </div>
-        <div class="card">
-                <div class="card-header" id="headingThree">
-                  <h5 class="mb-0">
-                    <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-      Tips and Tricks 3            
-      </button>
-                  </h5>
-                </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                  <div class="card-body">
-                        Take a close look at the seams on the garment. One of the ways that clothing manufacturers try to cut costs (and corners) is by sewing shoddy seams. Gently pull on the garment on each side of the seam and look at what happens to the stitching. If it’s a seam worth its salt, it won’t pull apart easily when you tug on it.
-
-                        Also, check to make sure that the seam is straight and not crooked or bunched up in places. There shouldn’t be loose threads hanging from the seam. If the garment has fasteners, such as a zipper or buttons, those should be securely attached to the item. It’s also a good idea to play with the zipper to make sure it opens and closes with ease and to test the buttons to make sure that they fit the buttonholes.                </div>
-              </div>
+  <div class="container">
+    <div class="row animate-box">
+      <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+        <h2>To buy or not to buy?</h2>
       </div>
-      <div class="card">
-            <div class="card-header" id="headingFour">
-              <h5 class="mb-0">
-                <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-  Tips and Tricks 4            
-  </button>
-              </h5>
+    </div>
+    <div class="row">
+      <div class="col-md-5 animate-box">
+        <div class="user-frame">
+
+
+          <span>Clothing Tips and Tricks</span>
+          <br><br>
+
+
+
+
+          <div class="accordion" id="accordionExample">
+
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="false" aria-controls="collapseOne">
+                    Tips and Tricks 1
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                  It pays to spend more for quality when buying clothes. The better made a garment is, whether it’s
+                  jeans, a t-shirt, or a blazer, the longer it will typically last. Higher-quality clothing is also
+                  easier to care for than the cheap stuff. If you’ve ever tossed a pair of cheap, viscose shorts or
+                  polyester top in the wash and had it come out not looking like itself, you know what I’m talking
+                  about. </div>
+              </div>
             </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-              <div class="card-body">
-                    Although you want to purchase high-quality clothing, you don’t have to pay top-shelf prices to do so. You can find decently constructed gems at fast-fashion shops as often as you can find shoddily constructed garments with designer labels on them. I’ve had a few dresses from Target and H&M last me more than five years. I’ve also had pricier dresses by a so-called “luxury” label fall apart after a few wears. Don’t fall into the trap, at least with clothing, that expensive equals better.
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Tips and Tricks 2
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  Quality clothing lasts longer because of better fabric and better construction. If you’re not sure if
+                  a piece of clothing is high quality, your eyes and hands can tell you.
 
-                    The trick is to be a diligent shopper and carefully inspect every item before you bring it home. If you do buy something online, make sure it’s from a site that lets you return items, since you’re not able to give the clothing a once-over before buying.
-                    
-                    Consensus: Go for quality, but remember that expensive isn’t synonymous with quality.</div>
-  </div>
+                  First, feel the fabric. A rough or scratchy texture is often a sign of a lower-quality fabric, unless
+                  it’s meant to be slightly nubby, like a tweed or some types of silk. You don’t want any holes or loose
+                  threads in the weave or knit of the fabric either. Next, lift the fabric up to the light. In the case
+                  of cotton or wool, you don’t want to be able to see completely through the fabric.
+
+                  Try to manipulate the fabric. If you crumple up a corner of a shirt or the hem of a pair of pants or
+                  skirt, what happens to the fabric once you let go? Some types of fabric, such as cheap cottons and
+                  linens, hold wrinkles like it’s their job. If the fabric wrinkles after a little handling, imagine
+                  what it will look like after a long day at work or play. </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree">
+                    Tips and Tricks 3
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                  Take a close look at the seams on the garment. One of the ways that clothing manufacturers try to cut
+                  costs (and corners) is by sewing shoddy seams. Gently pull on the garment on each side of the seam and
+                  look at what happens to the stitching. If it’s a seam worth its salt, it won’t pull apart easily when
+                  you tug on it.
+
+                  Also, check to make sure that the seam is straight and not crooked or bunched up in places. There
+                  shouldn’t be loose threads hanging from the seam. If the garment has fasteners, such as a zipper or
+                  buttons, those should be securely attached to the item. It’s also a good idea to play with the zipper
+                  to make sure it opens and closes with ease and to test the buttons to make sure that they fit the
+                  buttonholes. </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingFour">
+                <h5 class="mb-0">
+                  <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="false" aria-controls="collapseFour">
+                    Tips and Tricks 4
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                <div class="card-body">
+                  Although you want to purchase high-quality clothing, you don’t have to pay top-shelf prices to do so.
+                  You can find decently constructed gems at fast-fashion shops as often as you can find shoddily
+                  constructed garments with designer labels on them. I’ve had a few dresses from Target and H&M last me
+                  more than five years. I’ve also had pricier dresses by a so-called “luxury” label fall apart after a
+                  few wears. Don’t fall into the trap, at least with clothing, that expensive equals better.
+
+                  The trick is to be a diligent shopper and carefully inspect every item before you bring it home. If
+                  you do buy something online, make sure it’s from a site that lets you return items, since you’re not
+                  able to give the clothing a once-over before buying.
+
+                  Consensus: Go for quality, but remember that expensive isn’t synonymous with quality.</div>
+              </div>
 
 
 
@@ -92,43 +137,37 @@ Tips and Tricks 1
 
 
 
-					</div>
-				</div>
-				<div class="col-md-7 animate-box">
-		
-					<!-- <blockquote>
+            </div>
+          </div>
+          <div class="col-md-7 animate-box">
+
+            <!-- <blockquote>
 						<p>One major downfall of current spending apps is that they don't take into account the "cost per lifetime" of items you purchase. If you purchase a new laptop or phone, your entire monthly budget will be "ruined" due to the huge upfront cost. If you could accurately determine the expected lifetime of the product, you could get a much better picture of the actual cost, which would likely be just a dollar or two a day. On the other hand, buying an expensive pair of jeans might seem like a reckless decision, but if they last 5 times longer than a cheap pair and have a lifetime warranty, it's probably a smart purchase as opposed to the cheap ones. Depreciation of purchases spanning multiple financial years is common practice in the business world - could the same idea work with personal finances? Perhaps you can think of e.g. crowdsourced or AI-based tools to better evaluate the true "cost per lifetime" of purchases?
                             </p>
 					</blockquote>
 					<p>Another common trait we've identified is that spending apps largely rely on your purchase history and don't do much to actually enforce healthier spending habits in the future. Often they have no idea of your spending trends within a month - perhaps you tend to pay your bills near the beginning of the month, which might make the app wrongly project you are going way over your monthly budget. They rarely give you advice on what kind of purchases to avoid to stay within budget, what a good monthly budget would even be based on your stable income, how much you should be saving each month based on your financial environment, and so forth. What are some ways you could improve spending apps to help people better understand their budget, stay within it and put just the right amount of money aside at the end of each month?
                         </p> -->
-				</div>
-			</div>
-		</div>
-        <div class="col-md-7 animate-box">
-		<div class="user-frame">
-                <label for="searchForItem">What do you want to buy? *Be specific*</label>
-
-                <div class="input-group">
-                        <div>
-                          <input  id= "searchForItem"type="text" class="form-control"  style="width: 79%" placeholder="Search">
-                        <span class="input-group-append">
-                          <button class="btn btn-secondary" type="button">
-                            <i class="fa fa-search"></i>
-                          </button>
-                        </span>   
-                        </div>
-                   
-                      </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <div class="col-md-7 animate-box">
+        <div class="user-frame">
+          <label for="searchForItem">What do you want to buy? *Be specific*</label>
+
+          <div class="input-group">
+            <div>
+              <input id="searchForItem" type="text" class="form-control" style="width: 79%" placeholder="Search">
+              <span class="input-group-append">
+                <button id= "searchButton" class="btn btn-secondary" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+
+          </div>
+        </div>
+        <div id="result"></div>
+      </div>
     </div>
+  </div>
 </div>
-</div>
-
-
-
-
-
-
-
