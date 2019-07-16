@@ -52,7 +52,7 @@ router.post('/register',(req,res)=>{
 });
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-      successRedirect: '/dashboard',
+      successRedirect: '/save-more',
       failureRedirect: '/users/login',
       failureFlash: true
     })(req, res, next);
