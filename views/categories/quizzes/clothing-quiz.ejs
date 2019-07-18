@@ -1,0 +1,64 @@
+
+
+<div id="outside">
+<form id="survey-form" action="/my-handling-form-page" method="post">
+  <h1 id="title">Now, let's find if this item is suitable for you, <%= user.name%>.</h1>
+  
+  <legend style="text-align: left">Answer the following questions.</legend>
+
+  <p style="text-align: left; font-weight: bold;">1.Rate the quality of this product:</p>
+  <div class="rate" style="margin-top: -35px;">
+    <input type="radio" id="star5" name="rate" value="5" />
+    <label for="star5" title="text">5 stars</label>
+    <input type="radio" id="star4" name="rate" value="4" />
+    <label for="star4" title="text">4 stars</label>
+    <input type="radio" id="star3" name="rate" value="3" />
+    <label for="star3" title="text">3 stars</label>
+    <input type="radio" id="star2" name="rate" value="2" />
+    <label for="star2" title="text">2 stars</label>
+    <input type="radio" id="star1" name="rate" value="1" />
+    <label for="star1" title="text">1 star</label>
+  </div>
+  <br>
+
+  <p style="text-align: left; font-weight: bold">2.How many times will you wear this item?</p>
+
+  <div style="text-align: left; margin-top: -46px">
+    <label for="TimesPerWeek" style="text-align: left;"></label>
+    <p style="padding: 20px">
+      <input type="radio" name="timesPerWeek" value="daily" checked> Daily<br>
+      <input type="radio" name="timesPerWeek" value="two"> 2 times per week<br>
+      <input type="radio" name="timesPerWeek" value="three"> 3 times per week<br>
+      <input type="radio" name="timesPerWeek" value="four"> 4 times per week<br>
+      <input type="radio" name="timesPerWeek" value="five"> 5 times per week<br>
+      <input type="radio" name="timesPerWeek" value="six"> 6 times per week<br>
+      <input type="radio" name="timesPerWeek" value="one"> 1 time per week
+
+
+
+    </p>
+  </div>
+
+  
+  <p style="text-align: left; font-weight: bold">3.Enter the price of the item?</p>
+  <div class="input-group" style="margin-top: -20px; text-align: left;">
+    <label id="price" for="price"></label>
+    <input style="padding: 20px" class="form-control" type="text" required id="" name="price" placeholder="<%= currency.code + ' (' + currency.symbol_native + ')' %>">   </div>
+
+  </div>
+
+<div>
+  <br><br>
+</div>
+
+
+<div class="col-md-2 col-md-offset-5">
+  <div class="form-group">
+    <input type="submit" style="margin-top: -49px;" value="Submit your results" class="btn btn-primary">
+  </div>
+
+</div>
+
+
+</form>
+  </div>

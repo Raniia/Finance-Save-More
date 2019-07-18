@@ -72,7 +72,6 @@ router.post('/save-items', ensureAuthenticated, (req, res) => {
     ]).then((data)=>{
 
         var Calculateditems =calculateItemsEndDate( JSON.parse(JSON.stringify(data[0])),JSON.parse(JSON.stringify(data[1][0])));
-        console.log(Calculateditems);
         Currency.find({ code: data[1][0].currencies }).then((curr) => {
             res.render('items', {
                 user: req.user,
