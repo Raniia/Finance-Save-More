@@ -134,7 +134,7 @@ function calculateReviews (arr) {
       negativeCount += 1;
     }
   }
- return {positive: (positiveCount/arr.length)*100,netural:(neturalCount/arr.length)*100,negative:(negativeCount/arr.length)*100};
+ return {positive: (positiveCount/arr.length)*100,neutral:(neturalCount/arr.length)*100,negative:(negativeCount/arr.length)*100};
 
 }
 module.exports = router;

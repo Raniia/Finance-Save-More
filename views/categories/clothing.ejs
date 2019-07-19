@@ -13,14 +13,35 @@
           $('#spinnerModal').modal('hide');
           // Do something with the result
 
-          $("#result").html(JSON.stringify(result))
+
+
+          var nameOfItem = document.getElementById('searchForItem').value;
+           
+    var chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      title: {
+        text: "Smart Piggy Search for "+ nameOfItem
+      },
+      data: [{
+        type: "pie",
+        startAngle: 240,
+        yValueFormatString: "##0.00\"%\"",
+        indexLabel: "{label} {y}",
+        dataPoints: [
+          {y: result.neutral, label: "Neutral", color: "#FFFF66"},
+          {y: result.positive, label: "Positive", color: "#3CB371"},
+          {y: result.negative, label: "Negative", color: "#CD5C5C"}
+        ]
+      }]
+    });
+    chart.render();
+
                 }
       });
     });
   });
 
 </script>
-
 
 
 <div id="fh5co-wireframe">
@@ -159,8 +180,10 @@
             </div>
 
           </div>
+          <br>
+          <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
         </div>
-        <div id="result"></div>
       </div>
       
     </div>
