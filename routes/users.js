@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
     else {
         User.findOne({ email: email }).then((user) => {
             if (user) {
-                errors.push({ msg: 'This email is already in use,' })
+                errors.push({ msg: 'This email is already in use.' })
                 Countries.find({}).then(function (result) {
                     res.render('register', { errors, name, email, password, password2, user: req.user,Countries: result });
 
