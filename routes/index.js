@@ -36,7 +36,7 @@ router.get('/categories/clothing', ensureAuthenticated, (req, res) => {
   })
 })
 router.post('/search', ensureAuthenticated, (req, res) => {
-  unirest.get("https://webknox-search.p.rapidapi.com/webpage/search?number=10&language=en&query=" + req.body.key.split(' ').filter(Boolean).join('+'))
+  unirest.get("https://webknox-search.p.rapidapi.com/webpage/search?number=10&language=en&query=" + req.body.key.split(' ').filter(Boolean).join('+')+'reviews')
     .header("X-RapidAPI-Host", "webknox-search.p.rapidapi.com")
     .header("X-RapidAPI-Key", "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691")
     .end(function (result) {
@@ -53,7 +53,8 @@ router.post('/search', ensureAuthenticated, (req, res) => {
             SplitedtextArr.push(result[i].replace(/\n/g, '').match(/.{1,5000}/g).join('').match(/.{1,5000}/g));
           }
         };
-        textAnalysis(SplitedtextArr.flat(2)).then(function (text) {
+        SplitedtextArr=[].concat.apply([], SplitedtextArr)
+        textAnalysis(SplitedtextArr).then(function (text) {
           text=text.filter(Boolean);
           var reviews =[];
           for (var i = 0; i < text.length; i++) {
