@@ -70,9 +70,11 @@ router.post('/search', ensureAuthenticated, (req, res) => {
           var reviews =[];
           for (var i = 0; i < text.length; i++) {
             if (text[i]) {
-              reviews.push(text[i]);
+              reviews.push(text[i].polarity);
             }
           };
+          reviewsAvg =calculateReviews(reviews);
+          reviews.push(Math.round( reviewsAvg));
           res.json(reviews);
         })
       });
@@ -117,5 +119,22 @@ function textAnalysis(textarr) {
     }
   }
   return Promise.all(textArrPromises);
+}
+function calculateReviews (arr) {
+  const positive =2;
+  const netural =1;
+  const negative =1;
+  arr = arr || [];
+  var total =0;
+  for (var i =0; i<arr.length;i++){
+    if(arr[i]=='positive' ){
+      total +=2; 
+    }
+    else if (arr[i]=='neutral') {
+      total +=1; 
+    }
+  }
+ return total/arr.length;
+
 }
 module.exports = router;
