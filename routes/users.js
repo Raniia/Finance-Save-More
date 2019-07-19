@@ -40,7 +40,7 @@ router.post('/register',(req,res)=>{
                 errors.push({msg:'This email is already in use,'})
                 res.render('register',{errors,name,email,password,password2, user: req.user});
             }else{
-                const newUser = new User({name,email,password});
+                const newUser = new User({name,email,password,country});
                 bcrypt.genSalt(10,(err,salt)=>{
                     bcrypt.hash(newUser.password,salt,(err,hash)=>{
                         if(err) throw err;
