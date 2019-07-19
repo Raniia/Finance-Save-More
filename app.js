@@ -14,14 +14,6 @@ mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => {
     console.log("wow");
-    var average = new averageDetails({
-      country: "Egypt",
-      quality_average: ["3", "6", "9", "12", "18"],
-      price: ["300-500", "500-700", "700-1500", "1500,2200", "2200,3500"]
-    });
-    average.save().then(function(response) {
-      console.log(response);
-    });
   })
   .catch(err => {
     console.log(err);
