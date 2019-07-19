@@ -18,7 +18,6 @@ router.get('/save-more', ensureAuthenticated, (req, res) => {
                 return curr;
             })]).then((data)=>{
                 var Calculateditems =calculateItemsEndDate( JSON.parse(JSON.stringify(data[0])),JSON.parse(JSON.stringify(response[0])));
-                console.log(Calculateditems);
                 res.render('items', {
                     user: req.user,
                     currency: data[1][0],
@@ -54,6 +53,7 @@ router.put('/save-more', ensureAuthenticated, (req, res) => {
         return res.send("Succesfully saved");
     });
 });
+
 
 
 router.post('/save-items', ensureAuthenticated, (req, res) => {
@@ -156,7 +156,7 @@ function calculateItemsEndDate(items, savingDetails) {
             savingDetails.bankAccountAfter=0;
         }
         else {
-            savingDetails.bankAccount = (savingDetails.monthlyIncome - (savingDetails.livingExpenses + savingDetails.monthlyBills));
+            savingDetails.bankAccount = (savingDetails.monthlyIncome - (Number(savingDetails.livingExpenses)+Number(savingDetails.monthlyBills)));
             for (var j = 0; j < items.length; j++) {
                 items[j].remaining = items[j].remaining ?  (items[j].remaining+1) : 1;
             }
