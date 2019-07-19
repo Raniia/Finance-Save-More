@@ -10,8 +10,8 @@
         data: {key:$("#searchForItem").val()},
 
         success: function (result) {
-          // Do something with the result
           $('#spinnerModal').modal('hide');
+          // Do something with the result
           $("#result").html(JSON.stringify(result))
                 }
       });
@@ -182,15 +182,10 @@
 <div class=" modal fade" id="spinnerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 aria-hidden="true">
 <div class="modal-dialog cascading-modal modal-avatar modal-sm vertical-align-center" role="document">
-  <div class="modal-content">
-
-    <div class="modal-header">
-      <img src="../public/images/piggy-bank.png" alt="avatar" class="rounded-circle img-responsive">
-    </div>
+  <div class="modal-content" style="     background-color: rgba(0,0,0,0) !important;     border: none;
+  box-shadow: none;  ">
     <div class="modal-body mb-1 text-center">
       <img class="irc_mi" src="https://i.pinimg.com/originals/99/c6/fc/99c6fca3948cc5cd86f169639a828a36.gif" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" alt="نتيجة بحث الصور عن ‪piggy loading gif‬‏" width="304" height="171" style="margin-top: 91px;" data-iml="1563528352175">  
-      <img class="irc_mi" src="https://cdn.dribbble.com/users/935078/screenshots/3622876/pig.gif" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" alt="صورة ذات صلة" width="304" height="228" style="margin-top: 63px;" data-iml="1563528471923">
-      <img class="irc_mi" src="https://cdn.dribbble.com/users/86682/screenshots/2604384/week13_piggybank.gif" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" alt="صورة ذات صلة" width="304" height="228" style="margin-top: 63px;" data-iml="1563528503449"> 
      </div>
 
   </div>
