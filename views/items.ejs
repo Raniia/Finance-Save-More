@@ -104,9 +104,12 @@
               <% if(!item.remaining){ %>
                 <small class="label label-success"><i class="fa fa-clock-o"></i> Ready to buy</small>
                 <% } %>
-                <% if(item.remaining <= 5){ %>
+                <% if(item.remaining <= 5 && item.remaining > 1){ %>
                   <small class="label label-warning"><i class="fa fa-clock-o"></i> <%= item.remaining %> months</small>
-                  <% } %>
+                  <% } %> 
+                  <% if(item.remaining == 1){ %>
+                    <small class="label label-warning"><i class="fa fa-clock-o"></i> <%= item.remaining %> month</small>
+                    <% } %>
                   <% if(item.remaining > 5){ %>
                     <small class="label label-danger"><i class="fa fa-clock-o"></i> <%= item.remaining %> months</small>
                    <% } %>
