@@ -1,47 +1,60 @@
-const express = require ('express');
-const expressLayouts = require ('express-ejs-layouts');
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
 const app = express();
-const mongoose = require('mongoose');
-const flash= require('connect-flash');
-const session= require('express-session');
-const passport = require('passport');
+const mongoose = require("mongoose");
+const flash = require("connect-flash");
+const session = require("express-session");
+const passport = require("passport");
+const averageDetails = require("./models/AverageDetails");
 
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
-const db = require('./config/keys').mongoURI;
-mongoose.connect(db,{useNewUrlParser:true}).
-then(()=>console.log('wow')).catch(err => {console.log(err)})
-app.set('view engine', 'ejs');
+const db = require("./config/keys").mongoURI;
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => {
+    console.log("wow");
+    var average = new averageDetails({
+      country: "Egypt",
+      quality_average: ["3", "6", "9", "12", "18"],
+      price: ["300-500", "500-700", "700-1500", "1500,2200", "2200,3500"]
+    });
+    average.save().then(function(response) {
+      console.log(response);
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
+app.set("view engine", "ejs");
 app.use(expressLayouts);
-app.use('/public',express.static('public'));
-app.use(express.urlencoded({extended:false}));
+app.use("/public", express.static("public"));
+app.use(express.urlencoded({ extended: false }));
 app.use(
-    session({
-      secret: 'secret',
-      resave: true,
-      saveUninitialized: true
-    })
-  );
-  app.use(passport.initialize());
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+  })
+);
+app.use(passport.initialize());
 app.use(passport.session());
 
-  app.use(flash());
-  app.use((req,res,next)=>{
-    res.locals.success_msg =req.flash("success_msg");
-    res.locals.error_msg =req.flash("error_msg");
-    res.locals.error =req.flash("error");
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
 
-    next();
-  });
-  
+  next();
+});
 
 //routes
-app.use('/',require('./routes/index'));
-app.use('/users',require('./routes/users'));
-app.use(require('./routes/save-more'))
+app.use("/", require("./routes/index"));
+app.use("/users", require("./routes/users"));
+app.use(require("./routes/save-more"));
 
 // app.use(express.static('views/css'))
 
 const port = process.env.PORT || 4000;
-app.listen(port, console.log('listen on',port));
-
+app.listen(port, console.log("listen on", port));
