@@ -157,7 +157,7 @@ function calculateItemsEndDate(items, savingDetails) {
             savingDetails.bankAccountAfter=0;
         }
         else {
-            savingDetails.bankAccount = (savingDetails.monthlyIncome - savingDetails.livingExpenses);
+            savingDetails.bankAccount = (savingDetails.monthlyIncome - (savingDetails.livingExpenses+savingDetails.monthlyBills));
             for (var j = 0; j < items.length; j++) {
                 items[j].remaining = items[j].remaining ?  (items[j].remaining+1) : 1;
             }
