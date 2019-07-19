@@ -19,7 +19,6 @@ router.get('/register', (req, res) => {
         });
     });
   });
-});
 router.post('/register', (req, res) => {
     const { name, email, password, password2, country } = req.body;
     let errors = [];
@@ -63,8 +62,6 @@ router.post('/register', (req, res) => {
         });
       }
     });
-  }
-});
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/save-more',
