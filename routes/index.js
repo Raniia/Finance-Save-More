@@ -1,6 +1,8 @@
 const express = require('express');
 const unirest = require('unirest');
 var encodeUrl = require('encodeurl')
+const Currency = require('../models/Currency');
+const SavingDetails = require('../models/SavingDetails');
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
@@ -31,9 +33,18 @@ router.get('/buy-or-not', ensureAuthenticated, (req, res) => {
   })
 })
 router.get('/categories/clothing', ensureAuthenticated, (req, res) => {
-  res.render('categories/clothing', {
-    user: req.user
-  })
+
+  SavingDetails.find({ user: req.user }).then((response) => {
+    return response;
+}).then((data)=>{
+  Currency.find({ code: data[0].currencies }).then((curr) => {
+    res.render('categories/clothing', {
+      user: req.user,
+      currency: curr[0]
+    })
+  })   
+})
+
 })
 router.post('/search', ensureAuthenticated, (req, res) => {
   unirest.get("https://webknox-search.p.rapidapi.com/webpage/search?number=10&language=en&query=" + req.body.key.split(' ').filter(Boolean).join('+')+'reviews')
