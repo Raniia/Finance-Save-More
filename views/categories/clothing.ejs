@@ -12,8 +12,6 @@
         success: function (result) {
           $('#spinnerModal').modal('hide');
           // Do something with the result
-          var avg = result[result.length-1];
-          $('#radio'+avg).attr('checked', 'checked');
 
           $("#result").html(JSON.stringify(result))
                 }
@@ -162,16 +160,6 @@
 
           </div>
         </div>
-        <p style="text-align: left; font-weight: bold;">reviews from internet:</p>
-        <div class="rate" style="margin-top: -35px;">
-          <input id="radio2" type="radio" id="star3" name="reviews" value="2" />
-          <label for="star3" title="text">3 stars</label>
-          <input id="radio1" type="radio" id="star2" name="reviews" value="1" />
-          <label for="star2" title="text">2 stars</label>
-          <input id="radio0" type="radio" id="star1" name="reviews" value="0" />
-          <label for="star1" title="text">1 star</label>
-        </div>
-        <br>
         <div id="result"></div>
       </div>
       
