@@ -98,15 +98,70 @@ router.post("/search", ensureAuthenticated, (req, res) => {
 });
 
 router.post("/quizAnswers", ensureAuthenticated, (req, res) => {
-  console.log(req.user.country);
   AverageDetails.find({ country: req.user.country }).then(response => {
-    console.log(response);
-    calculateAverageLifetime(req.body, response);
+    calculateAverageLifetime(req.body, response[0]);
     res.json(req.body);
   });
 });
 
-function calculateAverageLifetime(userData, countryData) {}
+function calculateAverageLifetime(userData, countryData) {
+  console.log(userData);
+  console.log(userData.rate);
+  switch (userData.rate) {
+    case "1":
+      var price = countryData.price[0].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price <= price[1]) {
+        console.log("buy");
+      } else {
+        console.log("don't buy");
+      }
+      break;
+    case "2":
+      var price = countryData.price[1].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        console.log("don't buy");
+      } else {
+        console.log("buy");
+      }
+      break;
+    case "3":
+      var price = countryData.price[2].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        console.log("don't buy");
+      } else {
+        console.log("buy");
+      }
+      break;
+    case "4":
+      var price = countryData.price[3].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        console.log("don't buy");
+      } else {
+        console.log("buy");
+      }
+      break;
+    case "5":
+      var price = countryData.price[4].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        console.log("don't buy");
+      } else {
+        console.log("buy");
+      }
+      break;
+    default:
+      console.log("oppsyyy!!");
+  }
+}
 
 function getPlainText(url) {
   var encodedurl = encodeUrl(url);
