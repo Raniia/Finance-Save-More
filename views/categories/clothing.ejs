@@ -2,6 +2,7 @@
 <script>
   $(document).ready(function () {
     $("#searchButton").click(function () {
+      $('#spinnerModal').modal('show');
 
       $.ajax({
         url: '/search',
@@ -9,15 +10,38 @@
         data: {key:$("#searchForItem").val()},
 
         success: function (result) {
+          $('#spinnerModal').modal('hide');
           // Do something with the result
-          $("#result").html(JSON.stringify(result))
+
+
+
+          var nameOfItem = document.getElementById('searchForItem').value;
+           
+    var chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      title: {
+        text: "Smart Piggy Search for "+ nameOfItem
+      },
+      data: [{
+        type: "pie",
+        startAngle: 240,
+        yValueFormatString: "##0.00\"%\"",
+        indexLabel: "{label} {y}",
+        dataPoints: [
+          {y: result.neutral, label: "Neutral", color: "#FFFF66"},
+          {y: result.positive, label: "Positive", color: "#3CB371"},
+          {y: result.negative, label: "Negative", color: "#CD5C5C"}
+        ]
+      }]
+    });
+    chart.render();
+
                 }
       });
     });
   });
 
 </script>
-
 
 
 <div id="fh5co-wireframe">
@@ -139,11 +163,14 @@
 
             </div>
           </div>
+          <br>
+          <a href="#myFormQuiz" class="btn btn-primary">Is it suitable for me?</a>
+
         </div>
       </div>
       <div class="col-md-7 animate-box">
         <div class="user-frame">
-          <label for="searchForItem">What do you want to buy? *Be specific*</label>
+          <label for="searchForItem">What are you buying now?</label>
 
           <div class="input-group">
             <div>
@@ -156,13 +183,17 @@
             </div>
 
           </div>
+          
         </div>
-        <div id="result"></div>
+        <br>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
       </div>
-      
+
     </div>
   </div>
 </div>
+<div id="myFormQuiz">
 
 <div id="fh5co-wireframe">
   <div class="container">
@@ -175,3 +206,17 @@
       </div>
       </div>
       </div>
+    </div>
+      
+<div class=" modal fade" id="spinnerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog cascading-modal modal-avatar modal-sm vertical-align-center" role="document">
+  <div class="modal-content" style="     background-color: rgba(0,0,0,0) !important;     border: none;
+  box-shadow: none;  ">
+    <div class="modal-body mb-1 text-center">
+      <img class="irc_mi" src="../../public/images/giphy.gif" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" data-iml="1563528352175">  
+     </div>
+
+  </div>
+</div>
+</div>
