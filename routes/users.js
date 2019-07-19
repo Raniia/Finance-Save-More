@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require ('bcryptjs');
 const User = require('../models/User');
 const passport = require('passport');
+const Countries = require('../models/Countries');
+
 
 router.get('/login',(req,res)=>{
 res.render('login', {
@@ -10,14 +12,17 @@ res.render('login', {
   });
 });
 router.get('/register',(req,res)=>{
-res.render('register', {
-    user: req.user
-  });
+    Countries.find({}).then(function(result){
+        res.render('register', {
+            user: req.user,
+            Countries:result
+          });
+    });
 });
 router.post('/register',(req,res)=>{
-    const {name,email,password,password2 }=req.body;
+    const {name,email,password,password2,country }=req.body;
     let errors =[];
-    if(!name || !email || !password || !password2 ){
+    if(!name || !email || !password || !password2 || !country ){
         errors.push({msg:'Please fill in all the fields'})
     }
     if(password !== password2){
