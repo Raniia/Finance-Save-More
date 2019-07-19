@@ -1,1 +1,3 @@
 # Finance-Save-More
+Unlike other spending apps, Smart Piggy takes into account the "cost per lifetime" of an item. It helps you spend better on products that will be suitable for you.
+Smart Piggy also helps you save money for your wanted items and tells you the approximate waiting time (in months) till you have enough money to buy this product. These calculations depend on the priority of the item and your monthly income; taking into consideration the monthly bills and living expenses.
