@@ -12,6 +12,12 @@ const averageDetailsSchema = new mongoose.Schema({
       type: String,
       required: true
     }
+  ],
+  payPerDayAvg: [
+    {
+      type: Array,
+      required: true
+    }
   ]
 });
 const AverageDetails = mongoose.model("AverageDetails", averageDetailsSchema);

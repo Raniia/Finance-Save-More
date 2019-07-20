@@ -162,7 +162,7 @@ function calculateAverageLifetime(userData, countryData) {
       console.log("oppsyyy!!");
   }
 }
-function calculateAveragePricesFinland(price, duration) {
+function calculateAveragePrices(price, duration) {
   var noOfDays = duration*30;
   var pricePerDay = [];
   var avgPrice = price.split("-").map(function(val) {
