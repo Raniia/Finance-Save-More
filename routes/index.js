@@ -99,23 +99,24 @@ router.post("/search", ensureAuthenticated, (req, res) => {
 
 router.post("/quizAnswers", ensureAuthenticated, (req, res) => {
   AverageDetails.find({ country: req.user.country }).then(response => {
-    calculateAverageLifetime(req.body, response[0]);
-    res.json(req.body);
+    var result = calculateAverageLifetime(req.body, response[0]);
+    res.json({res:result});
   });
 });
 
 function calculateAverageLifetime(userData, countryData) {
-  console.log(userData);
-  console.log(userData.rate);
   switch (userData.rate) {
     case "1":
       var price = countryData.price[0].split("-").map(function(val) {
         return Number(val);
       });
       if (userData.price <= price[1]) {
-        console.log("buy");
+        return  getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[0]),userData.timesPerWeek,
+           userData.rate);
       } else {
-        console.log("don't buy");
+        return {result:"don't buy"};
       }
       break;
     case "2":
@@ -123,9 +124,12 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        console.log("don't buy");
+        return {result:"don't buy"};
       } else {
-        console.log("buy");
+        return   getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[1]),userData.timesPerWeek,
+           userData.rate);
       }
       break;
     case "3":
@@ -133,9 +137,12 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        console.log("don't buy");
+        return {result:"don't buy"};
       } else {
-        console.log("buy");
+        return   getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[2]),userData.timesPerWeek,
+           userData.rate);
       }
       break;
     case "4":
@@ -143,9 +150,12 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        console.log("don't buy");
+        return {result:"don't buy"};
       } else {
-        console.log("buy");
+        return   getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[4]),userData.timesPerWeek,
+           userData.rate);
       }
       break;
     case "5":
@@ -153,9 +163,12 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        console.log("don't buy");
+        return {result:"don't buy"};
       } else {
-        console.log("buy");
+        return  getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[4]),userData.timesPerWeek,
+           userData.rate);
       }
       break;
     default:
@@ -163,7 +176,7 @@ function calculateAverageLifetime(userData, countryData) {
   }
 }
 function calculateAveragePrices(price, duration) {
-  var noOfDays = duration*30;
+  var noOfDays = Number(duration);
   var pricePerDay = [];
   var avgPrice = price.split("-").map(function(val) {
     return Number(val);
@@ -174,6 +187,19 @@ function calculateAveragePrices(price, duration) {
       pricePerDay.push(result);
     }
     return pricePerDay
+}
+function getBestPrice(countryPayPerDayAvg,arrayOfPricesOfDesiredItem, avgUse,UserRate) {
+var strToComparePricesAndQuality = "";
+  for (var rate=0;rate<5;rate++){
+    if((rate+1) != UserRate ){
+    var rateOfItemBasedOnQuality=countryPayPerDayAvg[rate][avgUse-1];
+    var rateOfItemUserWantToBuy=arrayOfPricesOfDesiredItem[avgUse-1];
+    if((rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)>0){
+      strToComparePricesAndQuality += " item with rate "+ (rate+1) +" is better and will save "+(rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)*365+ " per year"
+    }
+    }
+  }
+  return strToComparePricesAndQuality;
 }
 
 function getPlainText(url) {
