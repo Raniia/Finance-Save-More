@@ -33,6 +33,11 @@ router.get("/buy-or-not", ensureAuthenticated, (req, res) => {
     user: req.user
   });
 });
+router.get("/categories/under-construction", ensureAuthenticated, (req, res) => {
+  res.render("categories/under-construction", {
+    user: req.user
+  });
+});
 router.get("/categories/clothing", ensureAuthenticated, (req, res) => {
   SavingDetails.find({ user: req.user })
     .then(response => {
