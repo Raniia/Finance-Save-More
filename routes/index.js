@@ -104,12 +104,14 @@ router.post("/quizAnswers", ensureAuthenticated, (req, res) => {
   });
 });
 
+
 function calculateAverageLifetime(userData, countryData) {
   switch (userData.rate) {
     case "1":
       var price = countryData.price[0].split("-").map(function(val) {
         return Number(val);
       });
+      console.log(price);
       if (userData.price <= price[1]) {
         return  getBestPrice(countryData.payPerDayAvg,
           calculateAveragePrices(userData.price +'-'+userData.price,
@@ -190,16 +192,18 @@ function calculateAveragePrices(price, duration) {
 }
 function getBestPrice(countryPayPerDayAvg,arrayOfPricesOfDesiredItem, avgUse,UserRate) {
 var strToComparePricesAndQuality = "";
+var ratingOfBetterItems= [];
   for (var rate=0;rate<5;rate++){
     if((rate+1) != UserRate ){
     var rateOfItemBasedOnQuality=countryPayPerDayAvg[rate][avgUse-1];
     var rateOfItemUserWantToBuy=arrayOfPricesOfDesiredItem[avgUse-1];
     if((rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)>0){
-      strToComparePricesAndQuality += " item with rate "+ (rate+1) +" is better and will save "+(rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)*365+ " per year"
+      ratingOfBetterItems.push({price: (rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)*365,rate:rate+1});
+      // strToComparePricesAndQuality += " item with rate "+ (rate+1) +" is better and will save "+(rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)*365+ " per year"
     }
     }
   }
-  return strToComparePricesAndQuality;
+  return ratingOfBetterItems;
 }
 
 function getPlainText(url) {
