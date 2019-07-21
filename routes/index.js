@@ -111,7 +111,6 @@ function calculateAverageLifetime(userData, countryData) {
       var price = countryData.price[0].split("-").map(function(val) {
         return Number(val);
       });
-      console.log(price);
       if (userData.price <= price[1]) {
         return  getBestPrice(countryData.payPerDayAvg,
           calculateAveragePrices(userData.price +'-'+userData.price,

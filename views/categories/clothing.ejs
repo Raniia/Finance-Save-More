@@ -75,18 +75,17 @@
 
           }
           else {
-            console.log(data.res)
             var content = ` <h1>Don't buy this item. <i class='fa fa-times'></i></h1>
-            Instead, you can buy:
-            <table class="table table-bordered"><thead>
+            Instead,
+            <table class="table "><thead>
     <tr>
-      <th class="text-center">rate</th>
-      <th class="text-center">price</th>
+      <th class="text-center">Buy an item with a rating of</th>
+      <th class="text-center">Savings in (€) per year</th>
     </tr>
   </thead>`
 
             for (i = 0; i < data.res.length; i++) {
-              content += '<tr><td>' + drawStarsInTable(data.res[i].rate) + '</td><td>' + Math.ceil(data.res[i].price) + '</td></tr>';
+              content += '<tr><td>' + drawStarsInTable(data.res[i].rate) + '</td><td>' + Math.ceil(data.res[i].price)+ '</td></tr>';
             }
             content += '</table>';
             $('#textDisplayed').append(content);
@@ -95,7 +94,6 @@
           }
 
 
-          console.log(data);
         })
     }
 
