@@ -116,7 +116,7 @@ function calculateAverageLifetime(userData, countryData) {
            countryData.quality_average[0]),userData.timesPerWeek,
            userData.rate);
       } else {
-        return {result:"don't buy"};
+        return "don't buy";
       }
       break;
     case "2":
@@ -124,7 +124,7 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        return {result:"don't buy"};
+        return "don't buy";
       } else {
         return   getBestPrice(countryData.payPerDayAvg,
           calculateAveragePrices(userData.price +'-'+userData.price,
@@ -137,7 +137,7 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        return {result:"don't buy"};
+        return "don't buy";
       } else {
         return   getBestPrice(countryData.payPerDayAvg,
           calculateAveragePrices(userData.price +'-'+userData.price,
@@ -150,7 +150,7 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        return {result:"don't buy"};
+        return "don't buy";
       } else {
         return   getBestPrice(countryData.payPerDayAvg,
           calculateAveragePrices(userData.price +'-'+userData.price,
@@ -163,7 +163,7 @@ function calculateAverageLifetime(userData, countryData) {
         return Number(val);
       });
       if (userData.price > price[1]) {
-        return {result:"don't buy"};
+        return "don't buy";
       } else {
         return  getBestPrice(countryData.payPerDayAvg,
           calculateAveragePrices(userData.price +'-'+userData.price,
