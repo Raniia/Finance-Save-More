@@ -103,15 +103,112 @@ router.post("/search", ensureAuthenticated, (req, res) => {
 });
 
 router.post("/quizAnswers", ensureAuthenticated, (req, res) => {
-  console.log(req.user.country);
   AverageDetails.find({ country: req.user.country }).then(response => {
-    console.log(response);
-    calculateAverageLifetime(req.body, response);
-    res.json(req.body);
+    var result = calculateAverageLifetime(req.body, response[0]);
+    res.json({res:result});
   });
 });
 
-function calculateAverageLifetime(userData, countryData) {}
+
+function calculateAverageLifetime(userData, countryData) {
+  switch (userData.rate) {
+    case "1":
+      var price = countryData.price[0].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price <= price[1]) {
+        return  getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[0]),userData.timesPerWeek,
+           userData.rate);
+      } else {
+        return "don't buy";
+      }
+      break;
+    case "2":
+      var price = countryData.price[1].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        return "don't buy";
+      } else {
+        return   getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[1]),userData.timesPerWeek,
+           userData.rate);
+      }
+      break;
+    case "3":
+      var price = countryData.price[2].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        return "don't buy";
+      } else {
+        return   getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[2]),userData.timesPerWeek,
+           userData.rate);
+      }
+      break;
+    case "4":
+      var price = countryData.price[3].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        return "don't buy";
+      } else {
+        return   getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[4]),userData.timesPerWeek,
+           userData.rate);
+      }
+      break;
+    case "5":
+      var price = countryData.price[4].split("-").map(function(val) {
+        return Number(val);
+      });
+      if (userData.price > price[1]) {
+        return "don't buy";
+      } else {
+        return  getBestPrice(countryData.payPerDayAvg,
+          calculateAveragePrices(userData.price +'-'+userData.price,
+           countryData.quality_average[4]),userData.timesPerWeek,
+           userData.rate);
+      }
+      break;
+    default:
+      console.log("oppsyyy!!");
+  }
+}
+function calculateAveragePrices(price, duration) {
+  var noOfDays = Number(duration);
+  var pricePerDay = [];
+  var avgPrice = price.split("-").map(function(val) {
+    return Number(val);
+  });
+    avgPrice = (avgPrice[0]+avgPrice[1])/2;
+    for(var x =1; x<8; x++) {
+      var result =avgPrice/((noOfDays/(x*4*12))*365);
+      pricePerDay.push(result);
+    }
+    return pricePerDay
+}
+function getBestPrice(countryPayPerDayAvg,arrayOfPricesOfDesiredItem, avgUse,UserRate) {
+var strToComparePricesAndQuality = "";
+var ratingOfBetterItems= [];
+  for (var rate=0;rate<5;rate++){
+    if((rate+1) != UserRate ){
+    var rateOfItemBasedOnQuality=countryPayPerDayAvg[rate][avgUse-1];
+    var rateOfItemUserWantToBuy=arrayOfPricesOfDesiredItem[avgUse-1];
+    if((rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)>0){
+      ratingOfBetterItems.push({price: (rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)*365,rate:rate+1});
+      // strToComparePricesAndQuality += " item with rate "+ (rate+1) +" is better and will save "+(rateOfItemUserWantToBuy-rateOfItemBasedOnQuality)*365+ " per year"
+    }
+    }
+  }
+  return ratingOfBetterItems;
+}
 
 function getPlainText(url) {
   var encodedurl = encodeUrl(url);

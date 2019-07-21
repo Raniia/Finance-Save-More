@@ -7,7 +7,12 @@
   font-weight: normal;
   font-style: normal;
 }
-
+.fa-times {
+  color: red;
+}
+.fa-check {
+  color: green
+}
 .rate {
   float: left;
   height: 46px;
@@ -1679,4 +1684,8 @@ input[type="text"] {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.disableAction{
+  pointer-events: none;
+
 }

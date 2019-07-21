@@ -1,43 +1,122 @@
 <% include .././partials/navigation-bar %>
 <script>
   $(document).ready(function () {
+    formQuizBtn
+    $("#formQuizBtn").click(function () {
+      $('#outside').show();
+      $('#textDisplayed').hide();
+
+    })
     $("#searchButton").click(function () {
       $('#spinnerModal').modal('show');
 
       $.ajax({
         url: '/search',
         type: 'post',
-        data: {key:$("#searchForItem").val()},
+        data: { key: $("#searchForItem").val() },
 
         success: function (result) {
+
           $('#spinnerModal').modal('hide');
 
           var nameOfItem = document.getElementById('searchForItem').value;
-           
-    var chart = new CanvasJS.Chart("chartContainer", {
-      animationEnabled: true,
-      title: {
-        text: "Smart Piggy Search for "+ nameOfItem
-      },
-      data: [{
-        type: "pie",
-        startAngle: 240,
-        yValueFormatString: "##0.00\"%\"",
-        indexLabel: "{label} {y}",
-        dataPoints: [
-          {y: result.neutral, label: "Neutral", color: "#FFFF66"},
-          {y: result.positive, label: "Positive", color: "#3CB371"},
-          {y: result.negative, label: "Negative", color: "#CD5C5C"}
-        ]
-      }]
-    });
-    chart.render();
 
-                }
+          var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+              text: "Smart Piggy Search for " + nameOfItem
+            },
+            data: [{
+              type: "pie",
+              startAngle: 240,
+              yValueFormatString: "##0.00\"%\"",
+              indexLabel: "{label} {y}",
+              dataPoints: [
+                { y: result.neutral, label: "Neutral", color: "#FFFF66" },
+                { y: result.positive, label: "Positive", color: "#3CB371" },
+                { y: result.negative, label: "Negative", color: "#CD5C5C" }
+              ]
+
+            }]
+          });
+          chart.render();
+
+        }
       });
     });
   });
+  function submitForm(formId, arrayOfItems) {
+    var $myForm = $(formId);
+    var buyOrNotModel = {
+      rate: $(arrayOfItems[0]).val(),
+      timesPerWeek: $(arrayOfItems[1]).val(),
+      price: $(arrayOfItems[2]).val()
+    };
+    if (!$myForm[0].checkValidity()) {
+      alert("All Fields Are Required")
 
+    }
+    else {
+      $('#spinnerModal').modal('show');
+      $.post('/quizAnswers',   // url
+        buyOrNotModel,
+        function (data, status, jqXHR) {// success callback
+          $('#spinnerModal').modal('hide');
+          $('#outside').hide();
+          $('#textDisplayed').show();
+          if (data.res.length == 0) {
+            $('#textDisplayed').html("<h1>Buy this item. <i class='fa fa-check'></i></h1>");
+
+          }
+          else if (
+            data.res == "don't buy"
+          ) {
+            $('#textDisplayed').html("<h1>Don't buy this item. <i class='fa fa-times'></i></h1>");
+
+          }
+          else {
+            var content = ` <h1>Don't buy this item. <i class='fa fa-times'></i></h1>
+            Instead,
+            <table class="table "><thead>
+    <tr>
+      <th class="text-center">Buy an item with a rating of</th>
+      <th class="text-center">Savings in (€) per year</th>
+    </tr>
+  </thead>`
+
+            for (i = 0; i < data.res.length; i++) {
+              content += '<tr><td>' + drawStarsInTable(data.res[i].rate) + '</td><td>' + Math.ceil(data.res[i].price)+ '</td></tr>';
+            }
+            content += '</table>';
+            $('#textDisplayed').append(content);
+
+
+          }
+
+
+        })
+    }
+
+  };
+  function drawStarsInTable(rate) {
+    
+    setTimeout(function(){
+      jQuery(`#star${rate}${rate}`).attr('checked', true);
+
+    },0);
+    return htmlStars = `<div class="rate disableAction">
+    <input type="radio" disabled id="star5${rate}" name="rate${rate}" value="5" />
+    <label for="star5${rate}" title="text">5 stars</label>
+    <input type="radio" disabled id="star4${rate}" name="rate${rate}" value="4" />
+    <label for="star4${rate}" title="text">4 stars</label>
+    <input type="radio" disabled id="star3${rate}" name="rate${rate}" value="3" />
+    <label for="star3${rate}" title="text">3 stars</label>
+    <input type="radio" disabled id="star2${rate}" name="rate${rate}" value="2" />
+    <label for="star2${rate}" title="text">2 stars</label>
+    <input type="radio"disabled id="star1${rate}" name="rate${rate}" value="1" />
+    <label for="star1${rate}" title="text">1 star</label>
+  </div>`
+  }
 </script>
 
 
@@ -161,7 +240,7 @@
             </div>
           </div>
           <br>
-          <a href="#myFormQuiz" class="btn btn-primary">Is it suitable for me?</a>
+          <a href="#myFormQuiz" id="formQuizBtn"  class="btn btn-primary">Is it suitable for me?</a>
 
         </div>
       </div>
@@ -173,14 +252,14 @@
             <div>
               <input id="searchForItem" type="text" class="form-control" style="width: 79%" placeholder="Search">
               <span class="input-group-append">
-                <button id= "searchButton" class="btn btn-secondary" type="button">
+                <button id="searchButton" class="btn btn-secondary" type="button">
                   <i class="fa fa-search"></i>
                 </button>
               </span>
             </div>
 
           </div>
-          
+
         </div>
         <br>
         <div id="chartContainer" style="height: 370px; width: 100%;"></div>
@@ -192,28 +271,32 @@
 </div>
 <div id="myFormQuiz">
 
-<div id="fh5co-wireframe">
-  <div class="container">
-    <div class="row animate-box">
-      <div class="col-md-9 col-md-offset-2 text-center fh5co-heading">
-<% include ./quizzes/clothing-quiz %>
+  <div id="fh5co-wireframe">
+    <div class="container">
+      <div class="row animate-box">
+        <div class="col-md-9 col-md-offset-2 text-center fh5co-heading">
+          <% include ./quizzes/clothing-quiz %>
 
 
-      </div>
-      </div>
-      </div>
+        </div>
+        <div class="col-md-9 col-md-offset-2 text-center fh5co-heading" id="textDisplayed">
+
+        </div>
       </div>
     </div>
-      
-<div class=" modal fade" id="spinnerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-aria-hidden="true">
-<div class="modal-dialog cascading-modal modal-avatar modal-sm vertical-align-center" role="document">
-  <div class="modal-content" style="     background-color: rgba(0,0,0,0) !important;     border: none;
-  box-shadow: none;  ">
-    <div class="modal-body mb-1 text-center">
-      <img class="irc_mi" src="../../public/images/giphy.gif" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" data-iml="1563528352175">  
-     </div>
-
   </div>
 </div>
+
+<div class=" modal fade" id="spinnerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog cascading-modal modal-avatar modal-sm vertical-align-center" role="document">
+    <div class="modal-content" style="     background-color: rgba(0,0,0,0) !important;     border: none;
+  box-shadow: none;  ">
+      <div class="modal-body mb-1 text-center">
+        <img class="irc_mi" src="../../public/images/giphy.gif"
+          onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" data-iml="1563528352175">
+      </div>
+
+    </div>
+  </div>
 </div>
