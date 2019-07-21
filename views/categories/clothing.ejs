@@ -106,16 +106,16 @@
       jQuery(`#star${rate}${rate}`).attr('checked', true);
 
     },0);
-    return htmlStars = `<div class="rate">
-    <input type="radio"  id="star5${rate}" name="rate${rate}" value="5" />
+    return htmlStars = `<div class="rate disableAction">
+    <input type="radio" disabled id="star5${rate}" name="rate${rate}" value="5" />
     <label for="star5${rate}" title="text">5 stars</label>
-    <input type="radio"  id="star4${rate}" name="rate${rate}" value="4" />
+    <input type="radio" disabled id="star4${rate}" name="rate${rate}" value="4" />
     <label for="star4${rate}" title="text">4 stars</label>
-    <input type="radio"  id="star3${rate}" name="rate${rate}" value="3" />
+    <input type="radio" disabled id="star3${rate}" name="rate${rate}" value="3" />
     <label for="star3${rate}" title="text">3 stars</label>
-    <input type="radio"  id="star2${rate}" name="rate${rate}" value="2" />
+    <input type="radio" disabled id="star2${rate}" name="rate${rate}" value="2" />
     <label for="star2${rate}" title="text">2 stars</label>
-    <input type="radio" id="star1${rate}" name="rate${rate}" value="1" />
+    <input type="radio"disabled id="star1${rate}" name="rate${rate}" value="1" />
     <label for="star1${rate}" title="text">1 star</label>
   </div>`
   }
