@@ -1,7 +1,7 @@
 
 
 <div id="outside">
-<form id="survey-form" action="/quizAnswers" method="post">
+<form id="survey-form" >
   <h1 id="title">Now, let's find if this item is suitable for you, <%= user.name%>.</h1>
   
   <legend style="text-align: left">Answer the following questions.</legend>
@@ -40,8 +40,8 @@
   
   <p style="text-align: left; font-weight: bold">3.Enter the price of the item?</p>
   <div class="input-group" style="margin-top: -20px; text-align: left;">
-    <label id="price" for="price"></label>
-    <input style="padding: 20px" class="form-control" type="text" required id="" name="price" placeholder="<%= currency.code + ' (' + currency.symbol_native + ')' %>">   </div>
+    <label for="price"></label>
+    <input id="price"  style="padding: 20px" class="form-control" type="text" required id="" name="price" placeholder="<%= currency.code + ' (' + currency.symbol_native + ')' %>">   </div>
 
   </div>
 
@@ -52,7 +52,7 @@
 
 <div class="col-md-2 col-md-offset-5">
   <div class="form-group">
-    <input type="submit" style="margin-top: -49px;" value="Submit your results" class="btn btn-primary">
+    <input   onclick="submitForm('#survey-form', ['input[name=\'rate\']:checked', 'input[name=\'timesPerWeek\']:checked','#price'])" style="margin-top: -49px;" value="Submit your results" class="btn btn-primary">
   </div>
 
 </div>

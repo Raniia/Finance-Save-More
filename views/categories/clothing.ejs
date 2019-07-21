@@ -37,7 +37,28 @@
       });
     });
   });
+  function submitForm(formId, arrayOfItems) {
+    var $myForm = $(formId);
+    var buyOrNotModel={
+      rate:$(arrayOfItems[0]).val(),
+      timesPerWeek:$(arrayOfItems[1]).val(),
+      price:$(arrayOfItems[2]).val()
+    };
+        if (!$myForm[0].checkValidity() ) {
+          alert("All Fields Are Required")
 
+        }
+        else {
+          $('#spinnerModal').modal('show');
+          $.post('/quizAnswers',   // url
+          buyOrNotModel,
+            function (data, status, jqXHR) {// success callback
+              $('#spinnerModal').modal('hide');
+                console.log(data);
+            })
+        }
+
+    };
 </script>
 
 
