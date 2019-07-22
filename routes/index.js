@@ -39,18 +39,10 @@ router.get("/categories/under-construction", ensureAuthenticated, (req, res) => 
   });
 });
 router.get("/categories/clothing", ensureAuthenticated, (req, res) => {
-  SavingDetails.find({ user: req.user })
-    .then(response => {
-      return response;
-    })
-    .then(data => {
-      Currency.find({ code: data[0].currencies }).then(curr => {
-        res.render("categories/clothing", {
-          user: req.user,
-          currency: curr[0]
-        });
-      });
-    });
+  res.render("categories/clothing", {
+    user: req.user,
+    currency: curr[0]
+  });
 });
 router.post("/search", ensureAuthenticated, (req, res) => {
   unirest
