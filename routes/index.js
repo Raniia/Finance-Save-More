@@ -41,7 +41,6 @@ router.get("/categories/under-construction", ensureAuthenticated, (req, res) => 
 router.get("/categories/clothing", ensureAuthenticated, (req, res) => {
   res.render("categories/clothing", {
     user: req.user,
-    currency: curr[0]
   });
 });
 router.post("/search", ensureAuthenticated, (req, res) => {
