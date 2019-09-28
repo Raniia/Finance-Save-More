@@ -4,6 +4,7 @@ var encodeUrl = require("encodeurl");
 const Currency = require("../models/Currency");
 const SavingDetails = require("../models/SavingDetails");
 const AverageDetails = require("../models/AverageDetails");
+const Nexmo = require('nexmo');
 
 const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
 
@@ -21,6 +22,10 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 router.get("/why-us", (req, res) => {
   res.render("why-us", {
     user: req.user
+  });
+});
+router.get("/review", (req, res) => {
+  res.render("review", {
   });
 });
 router.get("/contact-us", (req, res) => {
@@ -47,34 +52,45 @@ router.get("/categories/clothing", ensureAuthenticated, (req, res) => {
       });
     });
 });
+router.post("/askUsers", ensureAuthenticated, (req, res) => {
+  const nexmo = new Nexmo({
+    apiKey: '9a808a22',
+    apiSecret: 'yl532Rcitvc9xZUq',
+  });
+  nexmo.message.sendSms('smartPiggy', '201064957396', `Hello link: http://localhost:4000/review?id=${req.user.id}`)
+  res.json({id:req.user.id,url:`http://localhost:4000/review?id=${req.user.id}`});
+
+});
+  router.post("/submitReview", (req, res) => {
+
+    io.emit( req.body.id,  req.body.review);
+  
+  res.json({msg: `thanks for you review`});
+});
+
 router.post("/search", ensureAuthenticated, (req, res) => {
-  unirest
-    .get(
-      "https://webknox-search.p.rapidapi.com/webpage/search?number=10&language=en&query=" +
-        req.body.key
-          .split(" ")
-          .filter(Boolean)
-          .join("+") +
-        "reviews"
-    )
-    .header("X-RapidAPI-Host", "webknox-search.p.rapidapi.com")
-    .header(
-      "X-RapidAPI-Key",
-      "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691"
-    )
-    .end(function(result) {
+ unirest.get("https://google-search1.p.rapidapi.com/google-search")
+ .query({
+      "q": (req.body.key + " reviews").trim(),
+      "hl": "en",
+      "gl": "eg"
+  }).headers({
+      "x-rapidapi-host": "google-search1.p.rapidapi.com",
+      "x-rapidapi-key": "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691"
+  }).end(function(result) {
+    console.log(result.body,'hah')
       var FirstUrl = [];
-      if (result.body.length) {
-        for (var i = 0; i < result.body.length; i++) {
-          FirstUrl.push(getPlainText(result.body[i].url));
+      if (result.body.organic &&result.body.organic.length) {
+        for (var i = 0; i < result.body.organic.length; i++) {
+          FirstUrl.push(getPlainText(result.body.organic[i].url));
         }
       }
       Promise.all(FirstUrl).then(function(result) {
         var SplitedtextArr = [];
         for (var i = 0; i < result.length; i++) {
-          if (result[i]) {
+          if (result[i] && result[i].text) {
             SplitedtextArr.push(
-              result[i]
+              result[i].text
                 .replace(/\n/g, "")
                 .match(/.{1,5000}/g)
                 .join("")
@@ -83,7 +99,9 @@ router.post("/search", ensureAuthenticated, (req, res) => {
           }
         }
         SplitedtextArr = [].concat.apply([], SplitedtextArr);
+        console.log(SplitedtextArr,'testtestets');
         textAnalysis(SplitedtextArr).then(function(text) {
+          console.log(text,"heyheyhey")
           text = text.filter(Boolean);
           var reviews = [];
           for (var i = 0; i < text.length; i++) {
@@ -208,13 +226,14 @@ var ratingOfBetterItems= [];
 function getPlainText(url) {
   var encodedurl = encodeUrl(url);
   return new Promise(function(resolve, reject) {
-    unirest
-      .get("https://scraper-io.p.rapidapi.com/v1/text?url=" + encodedurl)
-      .header("X-RapidAPI-Host", "scraper-io.p.rapidapi.com")
-      .header(
-        "X-RapidAPI-Key",
-        "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691"
-      )
+    unirest.get( "https://scraper-io.p.rapidapi.com/v1/article")
+    .query({
+    "url": url
+})
+.headers({
+    "x-rapidapi-host": "scraper-io.p.rapidapi.com",
+    "x-rapidapi-key": "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691"
+})
       .end(function(result) {
         if (result.status == 200) {
           resolve(result.body);
@@ -230,19 +249,15 @@ function textAnalysis(textarr) {
     if (textarr[i]) {
       textArrPromises.push(
         new Promise(function(resolve, reject) {
-          unirest
-            .get(
-              "https://aylien-text.p.rapidapi.com/sentiment?text=" +
-                textarr[i]
-                  .split(" ")
-                  .filter(Boolean)
-                  .join("+")
-            )
-            .header("X-RapidAPI-Host", "aylien-text.p.rapidapi.com")
-            .header(
-              "X-RapidAPI-Key",
-              "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691"
-            )
+          unirest.get("https://aylien-text.p.rapidapi.com/sentiment")
+.query({
+    "text":textarr[i].split(" ").filter(Boolean).join(" "),
+    "mode": "tweet"
+})
+.headers({
+    "x-rapidapi-host": "aylien-text.p.rapidapi.com",
+    "x-rapidapi-key": "efba5145ebmsh7d3365d9680ac34p1c7934jsn2bd9b6ff3691"
+})
             .end(function(result) {
               if (result.status == 200) {
                 resolve(result.body);
