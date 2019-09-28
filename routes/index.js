@@ -53,8 +53,8 @@ router.post("/askUsers", ensureAuthenticated, (req, res) => {
     apiKey: '9a808a22',
     apiSecret: 'yl532Rcitvc9xZUq',
   });
-  nexmo.message.sendSms('smartPiggy', '201064957396', `Hello link: http://localhost:4000/review?id=${req.user.id}`)
-  res.json({id:req.user.id,url:`http://localhost:4000/review?id=${req.user.id}`});
+  nexmo.message.sendSms('smartPiggy', '201064957396', `Would you please tell us your opinion about ${req.body.productName}: https://smartpiggy010.herokuapp.com/review?id=${req.user.id}`)
+  res.json({id:req.user.id,url:`https://smartpiggy010.herokuapp.com/review?id=${req.user.id}`});
 
 });
   router.post("/submitReview", (req, res) => {
