@@ -6,6 +6,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const averageDetails = require("./models/AverageDetails");
+const socketio = require('socket.io');
 
 require("./config/passport")(passport);
 
@@ -49,4 +50,14 @@ app.use(require("./routes/save-more"));
 // app.use(express.static('views/css'))
 
 const port = process.env.PORT || 4000;
-app.listen(port, console.log("listen on", port));
+const server = app.listen(port, console.log("listen on", port));
+// Connect to socket.io
+global.io = socketio(server);
+io.on('connection', (socket) => {
+  console.log('Connected');
+  io.on('disconnect', () => {
+    console.log('Disconnected');
+  })
+});
+
+

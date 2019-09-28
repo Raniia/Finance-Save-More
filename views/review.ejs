@@ -1,0 +1,55 @@
+<script>
+  $(document).ready(function () {
+    $("#submitReview").click(function () {
+debugger
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('id');
+      $.ajax({
+        url: '/submitReview',
+        type: 'post',
+        data: { review:$('#comment').val(),
+                id:myParam },
+
+        success: function (result) {
+          console.log(result);
+        }
+      });
+    });
+});
+</script>
+  <div id="fh5co-contact">
+      <div class="container">
+        <div class="row animate-box">
+          <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+            <h2>Review</h2>
+            <p>Type your review </p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+              </div>
+            <div class="col-md-10 col-md-push-1 animate-box">
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                  <div class="form-group">
+                      <textarea name="any" id="comment" cols="50" rows="5"></textarea>
+                  </div>
+                </div>
+              </div>
+
+                <div class="col-md-12 col-md-offset-5">
+                  <div class="form-group">
+                    <button class="btn btn-primary" id="submitReview">Enter </button>
+
+                  </div>
+              
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div>

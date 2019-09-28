@@ -82,7 +82,7 @@
                         <div class="form-group">
                           <select class="form-control"  name="country" id="country">
                             <% Countries.forEach(function(Country) { %>
-                              <%if (Country.code =='FI') { %>
+                              <%if (Country.code =='EG') { %>
                                 <option selected value=<%= Country.code %>><%= Country.code %> (<%= Country.name %>)
                                 <% } else{ %> 
                                   <option disabled value=<%= Country.code %>><%= Country.code %> (<%= Country.name %>)
@@ -90,7 +90,7 @@
                             </option>
                             <% }) %>
                         </select>
-                        <span>Currently, only Finland is handled. Other countries will be handled soon.
+                        <span>Currently, only Egypt is handled. Other countries will be handled soon.
                         </span>
                           </div>
                     </div>

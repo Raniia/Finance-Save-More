@@ -1,6 +1,22 @@
 <% include .././partials/navigation-bar %>
 <script>
   $(document).ready(function () {
+    $("#askButton").click(function () {
+debugger
+      $.ajax({
+        url: '/askUsers',
+        type: 'post',
+        data: { productName: 'iphone' },
+
+        success: function (result) {
+          const socket = io();
+socket.on(result.id, function(test){
+  alert(test)
+})
+          console.log(result);
+        }
+      });
+    });
     formQuizBtn
     $("#formQuizBtn").click(function () {
       $('#outside').show();
@@ -45,6 +61,7 @@
       });
     });
   });
+
   function submitForm(formId, arrayOfItems) {
     var $myForm = $(formId);
     var buyOrNotModel = {
@@ -79,11 +96,11 @@
             var content = ` <h1>Don't buy this item. <i class='fa fa-times'></i></h1>
             Instead,
             <table class="table "><thead>
-                <tr>
-                  <th class="text-center">Buy an item with a rating of</th>
-                  <th class="text-center">Savings in (€) per year</th>
-                </tr>
-              </thead>`
+    <tr>
+      <th class="text-center">Buy an item with a rating of</th>
+      <th class="text-center">Savings in (ج.م.‏) per year</th>
+    </tr>
+  </thead>`
 
             for (i = 0; i < data.res.length; i++) {
               content += '<tr><td>' + drawStarsInTable(data.res[i].rate) + '</td><td>' + Math.ceil(data.res[i].price)+ '</td></tr>';
@@ -256,6 +273,9 @@
                 <button id="searchButton" class="btn btn-secondary" type="button">
                   <i class="fa fa-search"></i>
                 </button>
+                <button id="askButton" class="btn btn-secondary" type="button">
+                    <i class="fa fa-question"></i>
+                  </button>
               </span>
             </div>
 
@@ -270,6 +290,7 @@
     </div>
   </div>
 </div>
+
 <div id="myFormQuiz">
 
   <div id="fh5co-wireframe">
